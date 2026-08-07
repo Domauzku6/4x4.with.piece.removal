@@ -1,5 +1,3 @@
-from enum import nonmember
-
 import numpy as np
 
 game_board = np.full((4, 4), 0)
