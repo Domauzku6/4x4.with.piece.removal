@@ -1,3 +1,5 @@
+from enum import nonmember
+
 import numpy as np
 
 game_board = np.full((4, 4), 0)
@@ -30,7 +32,7 @@ def place_player(x, y):
         return False
 
 
-def player_removal():
+def player_removal_test():
     global game_board, player_piece_count, player_moves, max_piece_count
     if player_piece_count > max_piece_count:
         player_piece_count -= 1
@@ -39,7 +41,7 @@ def player_removal():
         return game_board
     else:
         return game_board
-def bot_removal():
+def bot_removal_test():
     global game_board, bot_piece_count, bot_moves, max_piece_count
     if bot_piece_count > max_piece_count:
         bot_piece_count -= 1
@@ -49,7 +51,7 @@ def bot_removal():
     else:
         return game_board
 
-def check_win(someone):
+def check_win_dont_use(someone):
     global game_board
 
     for row in range(4):
@@ -67,3 +69,15 @@ def check_win(someone):
         return True
 
     return False
+
+def game_win():
+    global player, game_board, bot
+    if check_win_dont_use(player):
+        print("Player wins!")
+        return True
+    else:
+        if check_win_dont_use(bot):
+            print("Bot wins!")
+            return True
+        else:
+            return False
