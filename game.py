@@ -11,7 +11,7 @@ while not game_core_functions.game_win():
         try:
             x, y = map(int, input("player move x, y: ").split(","))
             if not (0 <= x <= 3 and 0 <= y <= 3):
-                print("Invalid move! Coordinates must be between 0 and 3.") ]
+                print("Invalid move! Coordinates must be between 0 and 3.")
                 continue
             if game_core_functions.game_board[x, y] > 0:
                 print("space not empty")
