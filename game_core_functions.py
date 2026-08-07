@@ -66,5 +66,4 @@ def check_win(someone):
     if np.all(np.diag(np.fliplr(game_board)) == someone):
         return True
 
-    # if none false
     return False
