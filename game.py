@@ -1,43 +1,36 @@
-import game_core_functions as game_core_functions
+import game_core_functions as gcf
+from game_core_functions import player, bot
+from ai import ai_place
 
-player = 1
-bot = 2
-print("no cubes, 3x3 rules every time you place piece 4 piece on next turn 5 piece will be removed")
+print("4x4 Game: Connect 4 in a row, column, diagonal, or 4 corners to win!")
 
-while not game_core_functions.game_win():
-    print(game_core_functions.game_board)
+while not gcf.game_win():
+    print(gcf.game_board)
+
+    if not gcf.get_empty_spaces():
+        print("Draw!")
+        break
 
     while True:
         try:
             x, y = map(int, input("player move x, y: ").split(","))
-            if not (0 <= x <= 3 and 0 <= y <= 3):
-                print("Invalid move! Coordinates must be between 0 and 3.")
-                continue
-            if game_core_functions.game_board[x, y] > 0:
-                print("space not empty")
-                continue
-            else:
+            if 0 <= x <= 3 and 0 <= y <= 3 and gcf.game_board[x, y] == 0:
                 break
+            print("Invalid or taken space.")
         except ValueError:
-            print("Invalid format! Please use number,number 1,2")
+            print("Use format x,y (e.g. 1,2)")
 
-    game_core_functions.place_player(x, y)
-    game_core_functions.player_removal_test()
-
-    if game_core_functions.game_win():
-        print(game_core_functions.game_board)
+    gcf.place_piece(player, x, y)
+    if gcf.game_win():
+        print(gcf.game_board)
         break
 
-    print(game_core_functions.game_board)
-
-    # --- BOT TURN (AUTOMATED) ---
+    print(gcf.game_board)
     print("Bot is thinking...")
-    bot_x, bot_y = game_core_functions.get_best_bot_move()
-    print(f"Bot chooses: {bot_x},{bot_y}")
+    bx, by = ai_place(gcf.game_board, bot, player)
+    print(f"Bot chooses: {bx},{by}")
 
-    game_core_functions.place_bot(bot_x, bot_y)
-    game_core_functions.bot_removal_test()
-
-    if game_core_functions.game_win():
-        print(game_core_functions.game_board)
+    gcf.place_piece(bot, bx, by)
+    if gcf.game_win():
+        print(gcf.game_board)
         break
